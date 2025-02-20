@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+        }
+        .input-container {
+            position: relative;
+            margin: 10px 0;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            display: none;
+            margin-top: 5px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        .btn.signup {
+            background: #28a745;
+            color: white;
+        }
+        .btn.signup:hover {
+            background: #218838;
+        }
+        .btn.login {
+            background: #007bff;
+            color: white;
+        }
+        .btn.login:hover {
+            background: #0056b3;
+        }
+    </style>
+    <script>
+        function togglePassword(id) {
+            var input = document.getElementById(id);
+            var icon = document.getElementById(id + "-icon");
+            if (input.type === "password") {
+                input.type = "text";
+                icon.textContent = "👁️";
+            } else {
+                input.type = "password";
+                icon.textContent = "👁️‍🗨️";
+            }
+        }
+        function validateForm(event) {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+            var errorMessage = document.getElementById("error-message");
+
+            if (password !== confirmPassword) {
+                errorMessage.style.display = "block";
+                event.preventDefault(); // Prevent form submission
+            } else {
+                errorMessage.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form action="/signup" method="POST" onsubmit="validateForm(event)">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            
+            <div class="input-container">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <span class="eye-icon" id="password-icon" onclick="togglePassword('password')">👁️‍🗨️</span>
+            </div>
+            
+            <div class="input-container">
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+                <span class="eye-icon" id="confirm_password-icon" onclick="togglePassword('confirm_password')">👁️‍🗨️</span>
+            </div>
+            
+            <p id="error-message" class="error-message">Passwords do not match!</p>
+            
+            <button type="submit" class="btn signup">Sign Up</button>
+            <a href="/login" class="btn login">Login</a>
+        </form>
+    </div>
+</body>
+</html>
